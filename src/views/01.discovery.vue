@@ -27,7 +27,7 @@
       <h3 class="title">最新音乐</h3>
       <div class="items">
         <div class="item" v-for="(item, index) in newSong" :key="index">
-          <div class="img-wrap">
+          <div class="img-wrap" @click="playMusic(item.id)">
             <img :src="item.picUrl" alt />
             <span class="iconfont icon-play"></span>
           </div>
@@ -104,6 +104,12 @@ export default {
     getRecommandMv() {
       this.$api.getRecommandMv().then(res => {
         this.recommandMv = res.data.result;
+      });
+    },
+    playMusic(id) {
+      this.$api.playMusic(id).then(res => {
+        console.log(res, "res");
+        this.$parent.musicUrl = res.data.data[0].url;
       });
     }
   }

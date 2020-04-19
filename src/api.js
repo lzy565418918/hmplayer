@@ -38,6 +38,18 @@ const api = {
     // 全部mv
     getAllMv(params) {
         return axios.get(`${baseUrl}/mv/all`, { params })
+    },
+    // 播放音乐
+    playMusic(id) {
+        return axios.get(`${baseUrl}/song/url?id=${id}`)
+    },
+    // 获取精品歌单列表
+    getHighMusic(cat, limit) {
+        return axios.get(`${baseUrl}/top/playlist/highquality?cat=${cat}&limit=${limit}`)
+    },
+    // 获取歌单列表
+    getMusic(cat, limit, offset) {
+        return axios.get(`${baseUrl}/top/playlist?cat=${cat}&limit=${limit}&offset=${offset}`)
     }
 }
 export default api

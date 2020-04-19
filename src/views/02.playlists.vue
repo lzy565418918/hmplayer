@@ -3,160 +3,40 @@
     <!-- 同步 -->
     <div class="top-card">
       <div class="icon-wrap">
-        <img src="../assets/listCover.jpg" alt="" />
+        <img :src="hightMusic.coverImgUrl" alt />
       </div>
       <div class="content-wrap">
         <div class="tag">精品歌单</div>
-        <div class="title">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, laborum.
-        </div>
-        <div class="info">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
-          velit suscipit cumque incidunt ad vitae quos dicta temporibus, at,
-          labore harum libero. Officiis commodi illo, minus sed ad ab provident,
-          maxime nobis culpa esse iste quibusdam! Doloribus itaque quia
-          recusandae? Incidunt cumque non et minus magni dolores repudiandae
-          quia quas esse ipsam labore doloremque, maxime nobis odio ab.
-          Distinctio nemo nostrum numquam dolores labore laboriosam doloremque
-          harum vero aliquam sit et quam laborum magnam animi, quae beatae
-          fugiat sapiente! Perspiciatis libero atque ratione quam reprehenderit
-          numquam distinctio. Maxime reprehenderit, dicta placeat enim
-          laudantium voluptatem, ab eveniet nulla asperiores minima quidem!
-        </div>
+        <div class="title">{{hightMusic.name}}</div>
+        <div class="info">{{hightMusic.description}}</div>
       </div>
-      <img src="../assets/listCover.jpg" alt="" class="bg" />
+      <img src="../assets/listCover.jpg" alt class="bg" />
       <div class="bg-mask"></div>
     </div>
     <div class="tab-container">
       <!-- tab栏 顶部 -->
       <div class="tab-bar">
-        <span class="item active">全部</span>
-        <span class="item">欧美</span>
-        <span class="item">华语</span>
-        <span class="item">流行</span>
-        <span class="item">说唱</span>
-        <span class="item">摇滚</span>
-        <span class="item">民谣</span>
-        <span class="item">电子</span>
-        <span class="item">轻音乐</span>
-        <span class="item">影视原声</span>
-        <span class="item">ACG</span>
-        <span class="item">怀旧</span>
-        <span class="item">治愈</span>
-        <span class="item">旅行</span>
+        <span
+          class="item"
+          :class="{'active': item==activeType}"
+          v-for="(item, index) in ['全部','欧美','华语','流行','说唱','摇滚','民谣','电子','轻音乐','影视原声','ACG','怀旧','治愈','旅行']"
+          :key="index"
+          @click="pickType(item)"
+        >{{item}}</span>
       </div>
       <!-- tab的内容区域 -->
       <div class="tab-content">
         <div class="items">
-          <div class="item">
+          <div class="item" v-for="(item, index) in musicList" :key="index">
             <div class="img-wrap">
               <div class="num-wrap">
                 播放量:
-                <span class="num">66892</span>
+                <span class="num">{{item.playCount}}</span>
               </div>
-              <img src="../assets/cover.jpg" alt="" />
+              <img :src="item.coverImgUrl" alt />
               <span class="iconfont icon-play"></span>
             </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
-          </div>
-          <div class="item">
-            <div class="img-wrap">
-              <div class="num-wrap">
-                播放量:
-                <span class="num">66892</span>
-              </div>
-              <img src="../assets/cover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-            <p class="name">编辑推荐：一起探索这个未知的音乐罐头吧！</p>
+            <p class="name">{{item.name}}</p>
           </div>
         </div>
       </div>
@@ -169,30 +49,59 @@
       :total="total"
       :current-page="page"
       :page-size="20"
-    >
-    </el-pagination>
+    ></el-pagination>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'recommend',
+  name: "recommend",
   data() {
     return {
       // 总条数
-      total:0,
+      total: 0,
       // 页码
-      page:1
+      page: 1,
+      // 页容量
+      pageSize: 10,
+      // 选中的歌单类型
+      activeType: "全部",
+      hightMusic: {},
+      musicList: []
     };
+  },
+  created() {
+    this.getHighMusic();
+    this.getMusic(this.activeType);
   },
   methods: {
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+      this.page = val;
+      this.getMusic(this.activeType);
+    },
+    getHighMusic() {
+      this.$api.getHighMusic("全部", 1).then(res => {
+        console.log(res);
+        this.hightMusic = res.data.playlists[0];
+      });
+    },
+    pickType(val) {
+      this.activeType = val;
+      this.page = 1;
+      this.getMusic(val);
+      // console.log(this.activeType);
+    },
+    getMusic(val) {
+      this.$api.getMusic(val, this.pageSize, (this.page - 1) * 20).then(res => {
+        console.log(res);
+        this.total = res.data.total;
+        this.musicList = res.data.playlists;
+      });
     }
   }
 };
 </script>
 
 <style >
-
 </style>
