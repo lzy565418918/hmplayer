@@ -6,35 +6,22 @@
       <div class="video-wrap">
         <video
           controls
-          src="https://nie.v.netease.com/r/video/20180531/44f868de-deef-4409-8325-3bb3b5567f2c.mp4"
+          :src="mvUrl"
         ></video>
       </div>
       <!-- mv信息 -->
       <div class="info-wrap">
         <div class="singer-info">
           <div class="avatar-wrap">
-            <img src="../assets/avatar.jpg" alt />
+            <img :src="info.cover" alt />
           </div>
-          <span class="name">TF Boys</span>
+          <span class="name">{{info.artistName}}</span>
         </div>
         <div class="mv-info">
-          <h2 class="title">TF BOYS LIVE 秀 王源《淘汰》</h2>
-          <span class="date">发布：2014-11-04</span>
-          <span class="number">播放：94526次</span>
-          <p class="desc">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Consequuntur saepe aut officia itaque exercitationem culpa facere
-            doloremque voluptates id non nam, aliquid ipsum laborum odit
-            accusantium dolorem eligendi veniam dolore ea aperiam labore
-            cupiditate et a. Necessitatibus eaque blanditiis possimus nobis
-            ullam reprehenderit animi, vero reiciendis eos, deleniti commodi,
-            consequatur dolorem iusto. Assumenda doloribus soluta temporibus ut
-            dolorum corporis quos! Quisquam consectetur dolore iste quo
-            praesentium dolorum excepturi, at sapiente pariatur quis! Neque ex
-            cum, nobis aspernatur temporibus, voluptates at obcaecati dolore est
-            repudiandae, veniam laborum fuga corrupti illum ut. Ad a tempore
-            sint adipisci vero, delectus ducimus debitis molestias!
-          </p>
+          <h2 class="title">{{info.name}}</h2>
+          <span class="date">发布：{{info.publishTime}}</span>
+          <span class="number">播放：{{info.playCount}}次</span>
+          <p class="desc" v-if="info.desc">{{info.desc}}</p>
         </div>
       </div>
       <!-- 精彩评论 -->
@@ -134,19 +121,19 @@
       <h3 class="title">相关推荐</h3>
       <div class="mvs">
         <div class="items">
-          <div class="item">
+          <div class="item" v-for="(item, index) in simiMv" :key="index">
             <div class="img-wrap">
-              <img src="../assets/mvCover.jpg" alt />
+              <img :src="item.cover" alt />
               <span class="iconfont icon-play"></span>
               <div class="num-wrap">
                 <div class="iconfont icon-play"></div>
-                <div class="num">9912</div>
+                <div class="num">{{item.playCount}}</div>
               </div>
-              <span class="time">02:43</span>
+              <span class="time">{{item.duration|playTime}}</span>
             </div>
             <div class="info-wrap">
-              <div class="name">HEYNA</div>
-              <div class="singer">余恩</div>
+              <div class="name">{{item.name}}</div>
+              <div class="singer">{{item.artistName}}</div>
             </div>
           </div>
         </div>
@@ -158,6 +145,15 @@
 <script>
 export default {
   name: "mv",
+  filters:{
+    playTime(ms) {
+      let m = parseInt(ms/1000/60)
+      m = m < 10? '0'+m: m
+      let s = parseInt(ms/1000%60)
+      s = s < 10? '0'+s: s
+      return m+':'+s
+    }
+  },
   data() {
     return {
       id: 0,
@@ -166,16 +162,43 @@ export default {
       // 页码
       page: 1,
       // 页容量
-      limit: 10
+      limit: 10,
+      mvUrl: '',
+      simiMv: [],
+      info: {}
     };
   },
   created() {
-    this.id = this.$route.query;
+    this.id = this.$route.query.id;
     console.log(this.id);
+    this.init()
   },
   methods: {
+    init(){
+      this.getMvUrl()
+      this.getSimiMv()
+      this.getMvDetail()
+    },
     handleCurrentChange(val) {
       console.log(`当前页: ${val}`);
+    },
+    getMvUrl() {
+      this.$api.getMvUrl(this.id).then(res=>{
+        // console.log(res)
+        this.mvUrl = res.data.data.url
+      })
+    },
+    getSimiMv() {
+      this.$api.getSimiMv(this.id).then(res=>{
+        // console.log(res)
+        this.simiMv = res.data.mvs
+      })
+    },
+    getMvDetail() {
+      this.$api.getMvDetail(this.id).then(res=>{
+        console.log(res)
+        this.info = res.data.data
+      })
     }
   }
 };

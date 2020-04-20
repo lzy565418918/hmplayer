@@ -76,6 +76,18 @@ const api = {
                 offset
             }
         })
+    },
+    // 获取mv地址
+    getMvUrl(id) {
+        return axios.get(`${baseUrl}/mv/url?id=${id}`)
+    },
+    // 相关mv
+    getSimiMv(id) {
+        return axios.get(`${baseUrl}/simi/mv?mvid=${id}`)
+    },
+    // mv详情
+    getMvDetail(id) {
+        return axios.get(`${baseUrl}/mv/detail?mvid=${id}`)
     }
 }
 export default api
