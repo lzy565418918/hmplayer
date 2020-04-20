@@ -43,7 +43,7 @@ const router = new VueRouter({
     },
     {
       // 推荐歌单
-      path: '/playlist',
+      path: '/playlist/:id',
       component: playlist
     },
     {

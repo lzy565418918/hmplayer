@@ -1,11 +1,7 @@
 <template>
   <div class="songs-container">
     <div class="tab-bar">
-      <span class="item active">全部</span>
-      <span class="item">华语</span>
-      <span class="item">欧美</span>
-      <span class="item">日本</span>
-      <span class="item">韩国</span>
+      <span :class="{'item': true, 'active': typeActive==item.id}" @click="filterSong(item.id)" v-for="(item, index) in typeList" :key="index">{{item.type}}</span>
     </div>
     <!-- 底部的table -->
     <table class="el-table playlit-table">
@@ -18,46 +14,26 @@
         <th>时长</th>
       </thead>
       <tbody>
-        <tr class="el-table__row">
-          <td>1</td>
+        <tr class="el-table__row" v-for="(item, index) in detailSong" :key="index">
+          <td>{{index+1}}</td>
           <td>
-            <div class="img-wrap">
-              <img src="../assets/songCover.jpg" alt="" />
+            <div class="img-wrap" @click="playSong(item.id)">
+              <img :src="item.album.blurPicUrl" alt="" />
               <span class="iconfont icon-play"></span>
             </div>
           </td>
           <td>
             <div class="song-wrap">
               <div class="name-wrap">
-                <span>你要相信这不是最后一天</span>
+                <span>{{item.name}}</span>
                 <span class="iconfont icon-mv"></span>
               </div>
-              <span>电视剧加油练习生插曲</span>
+              <span>{{item.album.name}}</span>
             </div>
           </td>
-          <td>华晨宇</td>
-          <td>你要相信这不是最后一天</td>
-          <td>06:03</td>
-        </tr>
-        <tr class="el-table__row">
-          <td>2</td>
-          <td>
-            <div class="img-wrap">
-              <img src="../assets/songCover.jpg" alt="" />
-              <span class="iconfont icon-play"></span>
-            </div>
-          </td>
-          <td>
-            <div class="song-wrap">
-              <div class="name-wrap">
-                <span>你要相信这不是最后一天</span>
-                <span class="iconfont icon-mv"></span>
-              </div>
-            </div>
-          </td>
-          <td>华晨宇</td>
-          <td>你要相信这不是最后一天</td>
-          <td>06:03</td>
+          <td>{{item.artists[0].name}}</td>
+          <td>{{item.album.name}}</td>
+          <td>{{item.bMusic.playTime | playTime}}</td>
         </tr>
       </tbody>
     </table>
@@ -67,11 +43,62 @@
 <script>
 export default {
   name: 'songs',
+  filters:{
+    playTime(ms) {
+      let m = parseInt(ms/1000/60)
+      m = m < 10? '0'+m: m
+      let s = parseInt(ms/1000%60)
+      s = s < 10? '0'+s: s
+      return m+':'+s
+    }
+  },
   data() {
     return {
- 
+      typeList: [],
+      typeActive: 0,
+      detailSong: []
     };
-  }
+  },
+  created() {
+    this.typeList = [
+      {
+        type: '全部',
+        id: 0
+      },
+      {
+        type: '华语',
+        id: 7
+      },
+      {
+        type: '欧美',
+        id: 96
+      },
+      {
+        type: '日本',
+        id: 8
+      },
+      {
+        type: '韩国',
+        id: 16
+      },
+    ],
+    this.filterSong(this.typeActive)
+  },
+  methods: {
+    filterSong(id) {
+      this.typeActive = id
+      this.$api.getTopMusic(id).then( res => {
+        console.log(res)
+        this.detailSong = res.data.data.splice(0,20)
+      })
+    },
+    playSong(id) {
+      this.$api.getPlayUrl(id).then(res=>{
+        console.log(res)
+        this.$parent.musicUrl = res.data.data[0].url
+      })
+    }
+  },
 };
 </script>
 

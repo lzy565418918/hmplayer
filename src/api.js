@@ -50,6 +50,32 @@ const api = {
     // 获取歌单列表
     getMusic(cat, limit, offset) {
         return axios.get(`${baseUrl}/top/playlist?cat=${cat}&limit=${limit}&offset=${offset}`)
+    },
+    // 获取最新音乐
+    getTopMusic(type) {
+        return axios.get(baseUrl + '/top/song', {
+            params: {
+                type
+            }
+        })
+    },
+    // 歌单详情页
+    getPlayListDetail(id) {
+        return axios.get(`${baseUrl}/playlist/detail`, {
+            params: {
+                id
+            }
+        })
+    },
+    // 热门评论
+    getComment(id, offset=0) {
+        return axios.get(`${baseUrl}/comment/playlist`, {
+            params: {
+                id,
+                type: 2,
+                offset
+            }
+        })
     }
 }
 export default api

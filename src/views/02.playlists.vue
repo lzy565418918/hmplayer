@@ -28,7 +28,7 @@
       <div class="tab-content">
         <div class="items">
           <div class="item" v-for="(item, index) in musicList" :key="index">
-            <div class="img-wrap">
+            <div class="img-wrap" @click="toPlaylistDetail(item.id)">
               <div class="num-wrap">
                 播放量:
                 <span class="num">{{item.playCount}}</span>
@@ -98,6 +98,9 @@ export default {
         this.total = res.data.total;
         this.musicList = res.data.playlists;
       });
+    },
+    toPlaylistDetail(id){
+      this.$router.push('/playlist/'+id)
     }
   }
 };
